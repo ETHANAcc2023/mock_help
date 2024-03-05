@@ -21,7 +21,6 @@ class User(db.Model, UserMixin):
     username: Mapped[str]
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
-    children: Mapped[List["Child"]] = relationship()
 
     def get_id(self):
         return (self.user_id)
@@ -31,14 +30,4 @@ class Content(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
-    Content: Mapped[str]
-    children: Mapped[List["Child"]] = relationship()
-
-class Child(db.Model):
-    __tablename__ = "child_table"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user_table.user_id"))
-    Content_one: Mapped[int] = mapped_column(ForeignKey("content_table.id"))
-    Content_two: Mapped[int]
-    Content_three: Mapped[int]
+    content: Mapped[str]

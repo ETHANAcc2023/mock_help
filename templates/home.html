@@ -3,7 +3,24 @@
     {% for story in data %}
         <div class = "outline outline-black text-lg p-3 mt-1">
             <p class="font-semibold">{{story.title}}</p>
-            <p>{{story.Content}}</p>
+            <p>{{story.content}}</p>
         </div>
     {% endfor %}
+    <div class = "outline outline-black text-lg p-3 mt-1">
+        <form method="POST" class="space-y-3 grid p-2 justify-center"> 
+            {{ form.hidden_tag() }}
+            <div class="p-3">
+                {{ form.Title.label(class="font-semibold") }}
+                {{ form.Title(class="outline outline-black") }}
+            </div>
+            <div class="p-3">
+                {{ form.Content.label(class="font-semibold") }}
+                {{ form.Content(class="outline outline-black") }}
+            </div>
+
+            <div class="p-3">
+                {{ form.submit(class="font-semibold rounded-md bg bg-blue-400 p-2") }}
+            </div>
+        </form>
+    </div>
 {% endblock %}

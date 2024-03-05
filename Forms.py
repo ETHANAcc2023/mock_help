@@ -16,3 +16,9 @@ class Sign_up_form(FlaskForm):
     password = PasswordField("Password:",validators=[data_required(), EqualTo('confirm_password')])
     confirm_password = PasswordField("Confirm Password:", validators=[data_required()])
     submit = SubmitField()
+
+# Using WTFforms to create a Form that lets users create posts 
+class Postform(FlaskForm):
+    Title = StringField("Title:",validators=[data_required()])
+    Content = StringField("Content:",validators=[data_required()])
+    submit = SubmitField()

@@ -69,9 +69,10 @@ def signin_page():
     if form.validate_on_submit():
         #search for matching credentials
         user = DataBase.User.query.filter_by(username=form.username.data, email = form.email.data, password=form.password.data).first()
+
         if user == None: # if user not found
             return render_template('sign_in.html',
-                        form = form(),
+                        form = form,
                         user = DataBase.User)
         #if user found log them in and redirect
         login_user(user)
@@ -84,15 +85,24 @@ def signin_page():
     )
 
 
-@app.route("/home")
+@app.route("/home", methods =['GET','POST'])
 @login_required
 def home_page():
     user = DataBase.User
+    form = Forms.Postform()
     # pull all of the content out of the content table to show on the page
     data = DataBase.Content.query.all()
 
+    if form.validate_on_submit():
+        post = DataBase.Content(title=form.Title.data,content=form.Content.data)
+        DataBase.db.session.add(post)
+        DataBase.db.session.commit()
+
+        #signin the user and redirect to the homepage
+        return redirect(url_for('home_page'))
     return render_template(
         'home.html',
+        form = form,
         user = user,
         data = data
     )
