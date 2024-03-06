@@ -1,26 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
     {% for story in data %}
-        <div class = "outline outline-black text-lg p-3 mt-1">
-            <p class="font-semibold">{{story.title}}</p>
+        <article>
+            <h5>{{story.title}}</h5>
             <p>{{story.content}}</p>
-        </div>
+        </article>
     {% endfor %}
-    <div class = "outline outline-black text-lg p-3 mt-1">
-        <form method="POST" class="space-y-3 grid p-2 justify-center"> 
+    <article>
+        <h2> Create a post!</h2>
+        <form method="POST"> 
             {{ form.hidden_tag() }}
-            <div class="p-3">
-                {{ form.Title.label(class="font-semibold") }}
-                {{ form.Title(class="outline outline-black") }}
-            </div>
-            <div class="p-3">
-                {{ form.Content.label(class="font-semibold") }}
-                {{ form.Content(class="outline outline-black") }}
-            </div>
-
-            <div class="p-3">
-                {{ form.submit(class="font-semibold rounded-md bg bg-blue-400 p-2") }}
-            </div>
+            {{ form.Title() }}
+            {{ form.Content() }}
+            {{ form.submit() }}
         </form>
-    </div>
+    </article>
 {% endblock %}

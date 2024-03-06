@@ -71,9 +71,12 @@ def signin_page():
         user = DataBase.User.query.filter_by(username=form.username.data, email = form.email.data, password=form.password.data).first()
 
         if user == None: # if user not found
-            return render_template('sign_in.html',
-                        form = form,
-                        user = DataBase.User)
+            return render_template(
+                'sign_in.html',
+                form = form,
+                user = DataBase.User,
+                message = "Error: Provided username email or password was incorrect please try again"
+            )
         #if user found log them in and redirect
         login_user(user)
         return redirect(url_for('home_page'))
@@ -81,7 +84,8 @@ def signin_page():
     return render_template(
         'sign_in.html',
         form = form,
-        user = DataBase.User
+        user = DataBase.User,
+        message = None
     )
 
 
