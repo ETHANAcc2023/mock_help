@@ -32,11 +32,19 @@ def load_user(user_id):
 
 ### website routes ###
 
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect(url_for('index_page'))
+
 #Index page
 @app.route("/")
 @app.route("/index")
 def index_page():
-    return render_template('index.html')
+    user = DataBase.User
+    searchbar = Forms.user_search_form()
+    return render_template('index.html',
+                            searchbar = searchbar,
+                            user = user)
 
 @app.route("/signup", methods =['GET','POST'])
 def signup_page():
@@ -101,7 +109,7 @@ def home_page():
     if searchbar.validate_on_submit():
         user = DataBase.User.query.filter_by(username=form.username.data).first()
     if form.validate_on_submit():
-        post = DataBase.Content(poster_id = user, title=form.Title.data,content=form.Content.data)
+        post = DataBase.Content(poster_id = 1, title=form.Title.data,content=form.Content.data)
         DataBase.db.session.add(post)
         DataBase.db.session.commit()
 
