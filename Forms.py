@@ -22,3 +22,7 @@ class Postform(FlaskForm):
     Title = StringField(validators=[data_required()], render_kw={"placeholder": "Title"})
     Content = TextAreaField(validators=[data_required()], render_kw={"placeholder": "Content"})
     submit = SubmitField()
+
+class user_search_form(FlaskForm):
+    username = StringField(validators=[data_required()], render_kw={"placeholder": "Search for users"})
+    submit = SubmitField()

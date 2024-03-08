@@ -29,5 +29,6 @@ class Content(db.Model):
     __tablename__ = "content_table"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    poster_id: Mapped[int]
     title: Mapped[str]
     content: Mapped[str]

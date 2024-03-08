@@ -9,6 +9,12 @@
             {{ form.password() }}
             {{ form.submit() }}
         </form>
-        <h5 style="text-align: center;">{{ message }}</h5>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <h5 style="text-align: center;">{{ message }}</h5>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     </article>
 {% endblock %}

@@ -58,6 +58,7 @@ def signup_page():
 
     return render_template(
         'sign_up.html',
+        searchbar = Forms.user_search_form(),
         form = form,
         user = user
         )
@@ -94,11 +95,13 @@ def signin_page():
 def home_page():
     user = DataBase.User
     form = Forms.Postform()
+    searchbar = Forms.user_search_form()
     # pull all of the content out of the content table to show on the page
     data = DataBase.Content.query.all()
-
+    if searchbar.validate_on_submit():
+        user = DataBase.User.query.filter_by(username=form.username.data).first()
     if form.validate_on_submit():
-        post = DataBase.Content(title=form.Title.data,content=form.Content.data)
+        post = DataBase.Content(poster_id = user, title=form.Title.data,content=form.Content.data)
         DataBase.db.session.add(post)
         DataBase.db.session.commit()
 
@@ -106,6 +109,7 @@ def home_page():
         return redirect(url_for('home_page'))
     return render_template(
         'home.html',
+        searchbar = searchbar,
         form = form,
         user = user,
         data = data
@@ -115,12 +119,24 @@ def home_page():
 @login_required
 def profile_page():
     user = DataBase.User
-
+    searchbar = Forms.user_search_form()
     return render_template(
         'profile.html',
+        searchbar = searchbar,
         user = user
     )
 
+@app.route("/account/<Username>")
+@login_required
+def User_page(Username):
+    user = DataBase.User
+    searchbar = Forms.user_search_form()
+
+    return render_template(
+        'other_account.html',
+        searchbar = searchbar,
+        user = user
+    )
 @app.route("/signout")
 @login_required
 def signout():
